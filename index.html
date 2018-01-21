@@ -1,0 +1,74 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <p>Pathfinding Comparison</p>
+        <button type="button" onclick="reloadDijkstra();">Dijkstra</button>
+        <button type="button" onclick="reloadAStar();">A-Star</button>
+        <br><br>
+        <table>
+            <tr>
+                <td>Type:</td>
+                <td><span id="currentPathType"></span></td>
+            </tr>
+            <tr>
+                <td>Length:</td>
+                <td><span id="pathLength"></span></td>
+            </tr>
+        </table>
+        <br>
+        <canvas 
+            id="pathfindingCanvas" 
+            width="680" 
+            height="680" 
+            style="border:1px solid #000000;">
+        </canvas>
+    </body>
+    
+    <script src="Pathfinding.js"></script>
+    <script>
+        function reloadWithArg(arg) {
+            var url = window.location.href;
+            var argStartIndex = url.indexOf('?');
+            if (argStartIndex > -1) {
+                url = url.substring(0, argStartIndex);
+            }
+            window.location.href = url + '?' + arg;
+        }
+
+        function getQueryString(field, defaultValue) {
+            var href = window.location.href;
+            var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+            var string = reg.exec(href);
+            return string ? string[1] : defaultValue;
+        }
+
+        function reloadDijkstra() {
+            reloadWithArg("path=dijkstra");
+        }
+
+        function reloadAStar() {
+            reloadWithArg("path=astar");
+        }
+
+        function setPathLength(len) {
+            document.getElementById('pathLength').innerText = len;
+        }
+
+        function setCurrentPathType(type) {
+            switch (type) {
+                case ("astar"): {
+                    document.getElementById('currentPathType').innerText = "A-Star";
+                    calculatePath_AStar(setPathLength);
+                } break;
+                case ("dijkstra"): {
+                    document.getElementById('currentPathType').innerText = "Dijkstra";
+                    calculatePath_Dijkstra(setPathLength);
+                } break;
+            }
+        }
+        
+        setCurrentPathType(getQueryString('path', 'astar'));
+    </script>
+</html>
