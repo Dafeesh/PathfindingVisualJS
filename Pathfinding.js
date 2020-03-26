@@ -28,7 +28,7 @@ var grid = [];
 {
     setupGrid();
 
-    calculatePath_Dijkstra();
+    //calculatePath_Dijkstra();
     //calculatePath_AStar();
 })();
 
